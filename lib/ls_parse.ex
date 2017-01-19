@@ -18,8 +18,8 @@ defmodule LsParse do
     mod.ls(path)
   end
 
-  def execute(cl_opts) do
-    case System.cmd("ls", cl_opts) do
+  def execute([cmd | cl_opts]) do
+    case System.cmd(cmd, cl_opts) do
       {resp, 0} ->
         {:ok, resp}
       {resp, code} ->

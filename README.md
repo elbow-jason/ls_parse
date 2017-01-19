@@ -24,6 +24,6 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ## TODO
 
-  1. Add Tests
-  1. Add Linux
-  1. Add Windows (dir?)
+  - [x] Add Tests
+  - [x] Add Linux
+  - [ ] Add Windows (dir?)

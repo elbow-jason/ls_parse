@@ -18,8 +18,14 @@ defmodule LsParse.Time do
 
   defp sec_parts(sec) when is_binary(sec) do
     case String.split(sec, ".") do
-      [s, ms] -> {String.to_integer(s),{String.to_integer(ms), 6}}
-      [s]     -> {String.to_integer(s),{0, 6}}
+      [s, ms] ->
+        micro =
+          ms
+          |> String.slice(0, 6)
+          |> String.to_integer
+        {String.to_integer(s), {micro, 6}}
+      [s] ->
+        {String.to_integer(s),{0, 6}}
     end
   end
 

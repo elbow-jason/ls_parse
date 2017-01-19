@@ -1,21 +1,23 @@
 defmodule LsParse.Darwin do
   @behaviour LsParse.OS
-  @command_opts ["-laT"]
+  @os_command ~w(ls -laT)
 
   def ls(path) when path |> is_binary do
     case path |> command |> LsParse.execute do
       {:ok, resp} ->
-        {total, parts} =
-          resp
-          |> LsParse.Parse.parse
-        %{total: total, files: Enum.map(parts, &parse_line/1)}
+        parse_response(resp)
       {:error, _} = err ->
         err
     end
   end
 
   def command(path) when is_binary(path) do
-    @command_opts ++ [path]
+    @os_command ++ [path]
+  end
+
+  def parse_response(resp) when resp |> is_binary do
+    {total, parts} = resp |> LsParse.Parse.parse
+    %{total: total, files: Enum.map(parts, &parse_line/1)}
   end
 
   def parse_line([perms, links, owner, group, size, month, day, time, year, name]) do
